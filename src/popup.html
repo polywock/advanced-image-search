@@ -50,6 +50,10 @@
       font-size: inherit;
       font-family: inherit;
     }
+
+    #exact-width, #exact-height {
+      width: 100px;
+    }
     
   </style>
 </head>
@@ -66,7 +70,7 @@
       <input id="query" type="text">
     </div>
     <div class="field">
-      <label for="size">size</label>
+      <label for="size">sizes</label>
       <select id="size">
         <option value="">any</option>
         <option value="l">large</option>
@@ -87,6 +91,11 @@
         <option value="40mp">larger than 40 MP</option>
         <option value="60mp">larger than 60 MP</option>
       </select>
+    </div>
+    <div class="field">
+      <label>exact size</label>
+      <input id="exact-width" type="text" placeholder="width">
+      <input id="exact-height" type="text" placeholder="height">
     </div>
     <div class="field">
       <label for="aspect-ratio">aspect ratio</label>
@@ -160,6 +169,7 @@
     </div>
   </div>
   <button id="find">find</button>
+  <button style="margin-left: 10px;" id="clear">clear</button>
   <script src="popup.js"></script>
 </body>
 </html>

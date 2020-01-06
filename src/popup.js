@@ -1,8 +1,29 @@
 
 
 const findElem = document.querySelector("#find")
+const clearElem = document.querySelector("#clear")
 
 findElem.addEventListener("click", handleSubmit)
+clearElem.addEventListener("click", handleClear)
+
+function getDefaultForm() {
+  return {
+    query: "",
+    size: "",
+    aspectRatio: "",
+    color: "",
+    type: "",
+    format: "",
+    safeSearch: false,
+    usageRights: "",
+    exactWidth: "",
+    exactHeight: ""
+  }
+}
+
+function handleClear() {
+  writeForm(getDefaultForm())
+}
 
 function handleSubmit() {
   let form = readForm()
@@ -11,15 +32,20 @@ function handleSubmit() {
   params.append("tbm", "isch") // search images 
   params.append("q", form.query) // search query 
 
-  if (form.size) {
-    if (form.size.length === 1) {
-      tbs.push(`isz:${form.size}`)
-    } else {
-      tbs.push(`isz:lt,islt:${form.size}`)
-    }
+  if (form.exactWidth || form.exactHeight) {
+    tbs.push(`isz:ex,iszw:${form.exactWidth || form.exactHeight},iszh:${form.exactHeight || form.exactWidth}`)
+  } else {
+      if (form.size) {
+        if (form.size.length === 1) {
+          tbs.push(`isz:${form.size}`)
+        } else {
+          tbs.push(`isz:lt,islt:${form.size}`)
+        }
+      }
+
+      form.aspectRatio && tbs.push(`iar:${form.aspectRatio}`)
   }
-  
-  form.aspectRatio && tbs.push(`iar:${form.aspectRatio}`)
+
   form.color && tbs.push(`ic:${form.color}`)
   form.type && tbs.push(`itp:${form.type}`)
   form.format && tbs.push(`ift:${form.format}`)
@@ -51,7 +77,9 @@ function readForm() {
     type: document.querySelector("#type").value,
     format: document.querySelector("#format").value,
     safeSearch: document.querySelector("#safe-search").checked,
-    usageRights: document.querySelector("#usage-rights").value
+    usageRights: document.querySelector("#usage-rights").value,
+    exactWidth: document.querySelector("#exact-width").value,
+    exactHeight: document.querySelector("#exact-height").value
   }
 }
 
@@ -63,7 +91,9 @@ function writeForm(form) {
   document.querySelector("#type").value = form.type 
   document.querySelector("#format").value = form.format 
   document.querySelector("#safe-search").checked = form.safeSearch
-  document.querySelector("#usage-rights").value = form.usageRights 
+  document.querySelector("#usage-rights").value = form.usageRights
+  document.querySelector("#exact-width").value = form.exactWidth
+  document.querySelector("#exact-height").value = form.exactHeight
 }
 
 function persistForm(form) {

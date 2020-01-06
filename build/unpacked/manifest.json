@@ -1,8 +1,8 @@
 {
   "name": "Advanced Image Search",
   "short_name": "Advanced Image Search",
-  "version": "1.0",
-  "description": "Search Google images using advanced search.",
+  "version": "1.1",
+  "description": "Tiny extension to construct a URL for an advanced Google Images search. Filter via exact image size, or images larger than a preset size, and more.",
   "manifest_version": 2,
   "permissions": ["storage"],
   "browser_action": {

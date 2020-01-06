@@ -3,9 +3,28 @@
 <head>
   <style>
 
-    h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
+    a {
+      color: blue; 
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    a:visited {
+      color: blue; 
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: 1fr max-content;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header > span:first-child {
+      font-size: 1.2em; 
     }
 
     body {
@@ -35,7 +54,12 @@
   </style>
 </head>
 <body>
-  <h3>Advanced Image Search</h3>
+  <div class="header">
+    <span>Advanced Image Search</span>
+    <a href="https://github.com/polywock/advanced-image-search" target="_blank">
+      <span>Github Link</span>
+    </a>
+  </div>
   <div class="fields">
     <div class="field">
       <label for="query">search</label>

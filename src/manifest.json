@@ -1,8 +1,8 @@
 {
-  "name": "Image Advance Search",
-  "short_name": "Image Advance Search",
+  "name": "Advanced Image Search",
+  "short_name": "Advanced Image Search",
   "version": "1.0",
-  "description": "Search Google images using advance search.",
+  "description": "Search Google images using advanced search.",
   "manifest_version": 2,
   "permissions": ["storage"],
   "browser_action": {

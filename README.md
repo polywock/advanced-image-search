@@ -1,4 +1,4 @@
-# Image Advance Search 
+# Advanced Image Search 
 Chrome extension to advance search Google Images. 
 
 ## Build 

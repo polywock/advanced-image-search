@@ -1,0 +1,15 @@
+{
+  "name": "Advanced Image Search",
+  "short_name": "Advanced Image Search",
+  "version": "1.0",
+  "description": "Search Google images using advanced search.",
+  "manifest_version": 2,
+  "permissions": ["storage"],
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "icons": { 
+    "48": "icon48.png",
+    "128": "icon128.png" 
+  }
+}

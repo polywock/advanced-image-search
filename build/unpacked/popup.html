@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+
+    a {
+      color: blue; 
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    a:visited {
+      color: blue; 
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: 1fr max-content;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header > span:first-child {
+      font-size: 1.2em; 
+    }
+
+    body {
+      font-family: monospace;
+      font-size: 16px;
+      color: black; 
+      background-color: white;
+      user-select: none;
+      box-sizing: border-box;
+      width: 600px;
+    }
+
+    .field {
+      margin-bottom: 5px;
+    }
+
+    .field > label:first-child { 
+      min-width: 200px;
+      display: inline-block;
+    }
+
+    select, option, input, button {
+      font-size: inherit;
+      font-family: inherit;
+    }
+
+    #exact-width, #exact-height {
+      width: 100px;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span>Advanced Image Search</span>
+    <a href="https://github.com/polywock/advanced-image-search" target="_blank">
+      <span>Github Link</span>
+    </a>
+  </div>
+  <div class="fields">
+    <div class="field">
+      <label for="query">search</label>
+      <input id="query" type="text">
+    </div>
+    <div class="field">
+      <label for="size">sizes</label>
+      <select id="size">
+        <option value="">any</option>
+        <option value="l">large</option>
+        <option value="m">medium</option>
+        <option value="i">icon</option>
+        <option value="qsvga">larger than 400&#215;300</option>
+        <option value="vga">larger than 640&#215;480</option>
+        <option value="svga">larger than 800&#215;600</option>
+        <option value="xga">larger than 1024&#215;768</option>
+        <option value="2mp">larger than 2 MP</option>
+        <option value="4mp">larger than 4 MP</option>
+        <option value="6mp">larger than 6 MP</option>
+        <option value="8mp">larger than 8 MP</option>
+        <option value="10mp">larger than 10 MP</option>
+        <option value="12mp">larger than 12 MP</option>
+        <option value="15mp">larger than 15 MP</option>
+        <option value="20mp">larger than 20 MP</option>
+        <option value="40mp">larger than 40 MP</option>
+        <option value="60mp">larger than 60 MP</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>exact size</label>
+      <input id="exact-width" type="text" placeholder="width">
+      <input id="exact-height" type="text" placeholder="height">
+    </div>
+    <div class="field">
+      <label for="aspect-ratio">aspect ratio</label>
+      <select id="aspect-ratio">
+        <option value="">any</option>
+        <option value="t">tall</option>
+        <option value="q">square</option>
+        <option value="w">wide</option>
+        <option value="xw">panoramic</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="color">color</label>
+      <select id="color">
+        <option value="">any</option>
+        <option value="color">color</option>
+        <option value="gray">black and white</option>
+        <option value="trans">transparent</option>
+        <option value="specific,isc:red">red</option>
+        <option value="specific,isc:orange">orange</option>
+        <option value="specific,isc:yellow">yellow</option>
+        <option value="specific,isc:green">green</option>
+        <option value="specific,isc:teal">teal</option>
+        <option value="specific,isc:blue">blue</option>
+        <option value="specific,isc:purple">purple</option>
+        <option value="specific,isc:pink">pink</option>
+        <option value="specific,isc:white">white</option>
+        <option value="specific,isc:silver">silver</option>
+        <option value="specific,isc:black">black</option>
+        <option value="specific,isc:brown">brown</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="type">type</label>
+      <select id="type">
+        <option value="">any</option>
+        <option value="face">face</option>
+        <option value="photo">photo</option>
+        <option value="clipart">clipart</option>
+        <option value="lineart">lineart</option>
+        <option value="animated">animated</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="format">format</label>
+      <select id="format">
+        <option value="">any</option>
+        <option value="jpg">jpg</option>
+        <option value="gif">gif</option>
+        <option value="png">png</option>
+        <option value="bmp">bmp</option>
+        <option value="svg">svg</option>
+        <option value="webp">webp</option>
+        <option value="ico">ico</option>
+        <option value="craw">raw</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="usage-rights">usage rights</label>
+      <select id="usage-rights">
+        <option value="">any</option>
+        <option value="fmc">reuse w/ mod</option>
+        <option value="fc">reuse</option>
+        <option value="fm">non-commercial reuse w/ mod</option>
+        <option value="f">non-commercial reuse</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="safe-search">safe-search</label>
+      <input id="safe-search" type="checkbox">
+    </div>
+  </div>
+  <button id="find">find</button>
+  <button style="margin-left: 10px;" id="clear">clear</button>
+  <script src="popup.js"></script>
+</body>
+</html>

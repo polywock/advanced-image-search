@@ -1,50 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <style>
 
-    a {
-      color: blue; 
-      text-decoration: none;
+    :root {
+      --border-color: #aaa;
+      --text-color: black;
+      --bg-color: white;
+      --fg-color: #fafafa;
+      
+      --icon-color: #555;
+      --icon-muted-color: #888;
+      --icon-active-color: #24c;
     }
 
-    a:hover {
-      text-decoration: underline;
+    :root.darkTheme {
+      --border-color: #555;
+      --text-color: #eee;
+      --bg-color: #222;
+      --fg-color: #1a1a1a;
+
+      --icon-color: #eee;
+      --icon-muted-color: #eaeaea;
+      --icon-active-color: #8fc;
     }
 
-    a:visited {
-      color: blue; 
+    input[type="text"], select, button {
+      border: 1px solid var(--border-color);
+      background-color: var(--fg-color);
     }
 
-    .header {
-      display: grid;
-      grid-template-columns: 1fr max-content;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .header > span:first-child {
-      font-size: 1.2em; 
+    input, button, select {
+      color: inherit;
     }
 
     body {
-      font-family: monospace;
-      font-size: 16px;
-      color: black; 
-      background-color: white;
+      font-family: "Open Sans", sans-serif;
+      font-size: 15px;
+      color: var(--text-color); 
+      background-color: var(--bg-color);
       user-select: none;
       box-sizing: border-box;
-      width: 600px;
+      width: 450px;
+      padding: 5px;
+    }
+
+   
+    #query {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 5px;
+      font-size: 1.05em;
+      margin-bottom: 10px;
     }
 
     .field {
       margin-bottom: 5px;
+      display: grid;
+      grid-template-columns: 150px 1fr;
     }
 
-    .field > label:first-child { 
-      min-width: 200px;
-      display: inline-block;
-    }
+
 
     select, option, input, button {
       font-size: inherit;
@@ -54,122 +71,155 @@
     #exact-width, #exact-height {
       width: 100px;
     }
+
+    .footer {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: max-content max-content 1fr max-content;
+      grid-column-gap: 10px;
+      justify-items: right;
+      align-items: center;
+    }
+
+    svg {
+      color: var(--icon-color);
+      font-size: 1.3em;
+    }
+
+    svg.muted {
+      color: var(--icon-muted-color);
+    }
+
+    svg.active {
+      color: var(--icon-active-color);
+    }
     
   </style>
 </head>
 <body>
-  <div class="header">
-    <span>Advanced Image Search</span>
-    <a href="https://github.com/polywock/advanced-image-search" target="_blank">
-      <span>Github Link</span>
-    </a>
-  </div>
+  <input autocomplete="off" placeholder="search..." id="query" type="text">
   <div class="fields">
     <div class="field">
-      <label for="query">search</label>
-      <input id="query" type="text">
-    </div>
-    <div class="field">
       <label for="size">sizes</label>
-      <select id="size">
-        <option value="">any</option>
-        <option value="l">large</option>
-        <option value="m">medium</option>
-        <option value="i">icon</option>
-        <option value="qsvga">larger than 400&#215;300</option>
-        <option value="vga">larger than 640&#215;480</option>
-        <option value="svga">larger than 800&#215;600</option>
-        <option value="xga">larger than 1024&#215;768</option>
-        <option value="2mp">larger than 2 MP</option>
-        <option value="4mp">larger than 4 MP</option>
-        <option value="6mp">larger than 6 MP</option>
-        <option value="8mp">larger than 8 MP</option>
-        <option value="10mp">larger than 10 MP</option>
-        <option value="12mp">larger than 12 MP</option>
-        <option value="15mp">larger than 15 MP</option>
-        <option value="20mp">larger than 20 MP</option>
-        <option value="40mp">larger than 40 MP</option>
-        <option value="60mp">larger than 60 MP</option>
-      </select>
+      <div class="fieldValue">
+        <select id="size">
+          <option value="">any</option>
+          <option value="l">large</option>
+          <option value="m">medium</option>
+          <option value="i">icon</option>
+          <option value="qsvga">larger than 400&#215;300</option>
+          <option value="vga">larger than 640&#215;480</option>
+          <option value="svga">larger than 800&#215;600</option>
+          <option value="xga">larger than 1024&#215;768</option>
+          <option value="2mp">larger than 2 MP</option>
+          <option value="4mp">larger than 4 MP</option>
+          <option value="6mp">larger than 6 MP</option>
+          <option value="8mp">larger than 8 MP</option>
+          <option value="10mp">larger than 10 MP</option>
+          <option value="12mp">larger than 12 MP</option>
+          <option value="15mp">larger than 15 MP</option>
+          <option value="20mp">larger than 20 MP</option>
+          <option value="40mp">larger than 40 MP</option>
+          <option value="60mp">larger than 60 MP</option>
+        </select>
+      </div>
     </div>
     <div class="field">
       <label>exact size</label>
-      <input id="exact-width" type="text" placeholder="width">
-      <input id="exact-height" type="text" placeholder="height">
+      <div class="fieldValue">
+        <input autocomplete="off" id="exact-width" type="text" placeholder="width">
+        <input autocomplete="off" id="exact-height" type="text" placeholder="height">
+      </div>
     </div>
     <div class="field">
       <label for="aspect-ratio">aspect ratio</label>
-      <select id="aspect-ratio">
-        <option value="">any</option>
-        <option value="t">tall</option>
-        <option value="q">square</option>
-        <option value="w">wide</option>
-        <option value="xw">panoramic</option>
-      </select>
+      <div class="fieldValue">
+        <select id="aspect-ratio">
+          <option value="">any</option>
+          <option value="t">tall</option>
+          <option value="q">square</option>
+          <option value="w">wide</option>
+          <option value="xw">panoramic</option>
+        </select>
+      </div>
     </div>
     <div class="field">
       <label for="color">color</label>
-      <select id="color">
-        <option value="">any</option>
-        <option value="color">color</option>
-        <option value="gray">black and white</option>
-        <option value="trans">transparent</option>
-        <option value="specific,isc:red">red</option>
-        <option value="specific,isc:orange">orange</option>
-        <option value="specific,isc:yellow">yellow</option>
-        <option value="specific,isc:green">green</option>
-        <option value="specific,isc:teal">teal</option>
-        <option value="specific,isc:blue">blue</option>
-        <option value="specific,isc:purple">purple</option>
-        <option value="specific,isc:pink">pink</option>
-        <option value="specific,isc:white">white</option>
-        <option value="specific,isc:silver">silver</option>
-        <option value="specific,isc:black">black</option>
-        <option value="specific,isc:brown">brown</option>
-      </select>
+      <div class="fieldValue">
+        <select id="color">
+          <option value="">any</option>
+          <option value="color">color</option>
+          <option value="gray">black and white</option>
+          <option value="trans">transparent</option>
+          <option value="specific,isc:red">red</option>
+          <option value="specific,isc:orange">orange</option>
+          <option value="specific,isc:yellow">yellow</option>
+          <option value="specific,isc:green">green</option>
+          <option value="specific,isc:teal">teal</option>
+          <option value="specific,isc:blue">blue</option>
+          <option value="specific,isc:purple">purple</option>
+          <option value="specific,isc:pink">pink</option>
+          <option value="specific,isc:white">white</option>
+          <option value="specific,isc:silver">silver</option>
+          <option value="specific,isc:black">black</option>
+          <option value="specific,isc:brown">brown</option>
+        </select>
+      </div>
     </div>
     <div class="field">
       <label for="type">type</label>
-      <select id="type">
-        <option value="">any</option>
-        <option value="face">face</option>
-        <option value="photo">photo</option>
-        <option value="clipart">clipart</option>
-        <option value="lineart">lineart</option>
-        <option value="animated">animated</option>
-      </select>
+      <div class="fieldValue">
+        <select id="type">
+          <option value="">any</option>
+          <option value="face">face</option>
+          <option value="photo">photo</option>
+          <option value="clipart">clipart</option>
+          <option value="lineart">lineart</option>
+          <option value="animated">animated</option>
+        </select>
+      </div>
     </div>
     <div class="field">
       <label for="format">format</label>
-      <select id="format">
-        <option value="">any</option>
-        <option value="jpg">jpg</option>
-        <option value="gif">gif</option>
-        <option value="png">png</option>
-        <option value="bmp">bmp</option>
-        <option value="svg">svg</option>
-        <option value="webp">webp</option>
-        <option value="ico">ico</option>
-        <option value="craw">raw</option>
-      </select>
+      <div class="fieldValue">
+        <select id="format">
+          <option value="">any</option>
+          <option value="jpg">jpg</option>
+          <option value="gif">gif</option>
+          <option value="png">png</option>
+          <option value="bmp">bmp</option>
+          <option value="svg">svg</option>
+          <option value="webp">webp</option>
+          <option value="ico">ico</option>
+          <option value="craw">raw</option>
+        </select>
+      </div>
     </div>
     <div class="field">
       <label for="usage-rights">usage rights</label>
-      <select id="usage-rights">
-        <option value="">any</option>
-        <option value="fmc">reuse w/ mod</option>
-        <option value="fc">reuse</option>
-        <option value="fm">non-commercial reuse w/ mod</option>
-        <option value="f">non-commercial reuse</option>
-      </select>
+      <div class="fieldValue">
+        <select id="usage-rights">
+          <option value="">any</option>
+          <option value="fmc">reuse w/ mod</option>
+          <option value="fc">reuse</option>
+          <option value="fm">non-commercial reuse w/ mod</option>
+          <option value="f">non-commercial reuse</option>
+        </select>
+      </div>
     </div>
     <div class="field">
       <label for="safe-search">safe-search</label>
-      <input id="safe-search" type="checkbox">
+      <div class="fieldValue">
+        <input id="safe-search" type="checkbox">
+      </div>
     </div>
   </div>
-  <button id="find">find</button>
-  <button style="margin-left: 10px;" id="clear">clear</button>
+  <div class="footer">
+    <button id="find">search</button>
+    <button id="clear">clear</button>
+    <svg tabindex="0" id="dark-theme" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"></path></svg>
+    <svg tabIndex="0" id="github" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+  </div>
   <script src="popup.js"></script>
 </body>
 </html>

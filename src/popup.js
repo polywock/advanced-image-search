@@ -1,10 +1,66 @@
 
+const m = {
+  query: document.querySelector("#query"),
+  size: document.querySelector("#size"),
+  exactWidth: document.querySelector("#exact-width"),
+  exactHeight: document.querySelector("#exact-height"),
+  aspectRatio: document.querySelector("#aspect-ratio"),
+  color: document.querySelector("#color"),
+  type: document.querySelector("#type"),
+  format: document.querySelector("#format"),
+  usageRights: document.querySelector("#usage-rights"),
+  safeSearch: document.querySelector("#safe-search"),
+  search: document.querySelector("#find"),
+  clear: document.querySelector("#clear"),
+  darkTheme: document.querySelector("#dark-theme"),
+  github: document.querySelector("#github")
+}
 
-const findElem = document.querySelector("#find")
-const clearElem = document.querySelector("#clear")
 
-findElem.addEventListener("click", handleSubmit)
-clearElem.addEventListener("click", handleClear)
+
+m.query.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    persistForm(readForm())
+    m.search.click()
+  }
+})
+
+m.search.addEventListener("click", handleSubmit)
+m.clear.addEventListener("click", handleClear)
+
+
+// dark theme button
+const handleDarkTheme = () => {
+  if (m.darkTheme.classList.contains("active")) {
+    m.darkTheme.classList.remove("active")
+    document.documentElement.classList.remove("darkTheme")
+  } else {
+    m.darkTheme.classList.add("active")
+    document.documentElement.classList.add("darkTheme")
+  }
+
+}
+
+m.darkTheme.addEventListener("click", handleDarkTheme)
+m.darkTheme.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    handleDarkTheme()
+  }
+})
+
+// github button
+const handleGithub = () => {
+  window.open(`https://github.com/polywock/advanced-image-search`, '_blank');
+}
+
+m.github.addEventListener("click", handleGithub)
+m.github.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    handleGithub()
+  }
+})
+
+
 
 function getDefaultForm() {
   return {
@@ -27,6 +83,7 @@ function handleClear() {
 
 function handleSubmit() {
   let form = readForm()
+  if (!form.query) return 
   let params = new URLSearchParams();
   let tbs = [];
   params.append("tbm", "isch") // search images 
@@ -70,16 +127,17 @@ function handleSubmit() {
 
 function readForm() {
   return {
-    query: document.querySelector("#query").value,
-    size: document.querySelector("#size").value,
-    aspectRatio: document.querySelector("#aspect-ratio").value,
-    color: document.querySelector("#color").value,
-    type: document.querySelector("#type").value,
-    format: document.querySelector("#format").value,
-    safeSearch: document.querySelector("#safe-search").checked,
-    usageRights: document.querySelector("#usage-rights").value,
-    exactWidth: document.querySelector("#exact-width").value,
-    exactHeight: document.querySelector("#exact-height").value
+    query: m.query.value,
+    size: m.size.value,
+    aspectRatio: m.aspectRatio.value,
+    color: m.color.value,
+    type: m.type.value,
+    format: m.format.value,
+    safeSearch: m.safeSearch.checked,
+    usageRights: m.usageRights.value,
+    exactWidth: m.exactWidth.value,
+    exactHeight: m.exactHeight.value,
+    darkTheme: m.darkTheme.classList.contains("active")
   }
 }
 
@@ -87,13 +145,17 @@ function writeForm(form) {
   document.querySelector("#query").value = form.query 
   document.querySelector("#size").value = form.size 
   document.querySelector("#aspect-ratio").value = form.aspectRatio
-  document.querySelector("#color").value = form.color 
-  document.querySelector("#type").value = form.type 
-  document.querySelector("#format").value = form.format 
-  document.querySelector("#safe-search").checked = form.safeSearch
-  document.querySelector("#usage-rights").value = form.usageRights
-  document.querySelector("#exact-width").value = form.exactWidth
-  document.querySelector("#exact-height").value = form.exactHeight
+  m.color.value = form.color 
+  m.type.value = form.type 
+  m.format.value = form.format 
+  m.safeSearch.checked = form.safeSearch
+  m.usageRights.value = form.usageRights
+  m.exactWidth.value = form.exactWidth
+  m.exactHeight.value = form.exactHeight
+  if (form.darkTheme) {
+    m.darkTheme.classList.add("active")
+    document.documentElement.classList.add("darkTheme")
+  }
 }
 
 function persistForm(form) {
@@ -122,5 +184,5 @@ window.onload = async () => {
 
 setInterval(() => {
   persistForm(readForm())
-}, 50)
+}, 100)
 

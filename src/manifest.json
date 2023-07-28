@@ -1,7 +1,7 @@
 {
   "name": "Advanced Image Search",
   "short_name": "Advanced Image Search",
-  "version": "1.3",
+  "version": "1.6",
   "description": "Tiny extension to construct a URL for an advanced Google Images search.",
   "manifest_version": 3,
   "permissions": ["storage"],

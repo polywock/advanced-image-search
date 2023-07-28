@@ -4,7 +4,6 @@ const m = {
   addProfile: document.querySelector("#add-profile"),
   query: document.querySelector("#query"),
   size: document.querySelector("#size"),
-  exactField: document.querySelector("#exact-field"),
   exactWidth: document.querySelector("#exact-width"),
   exactHeight: document.querySelector("#exact-height"),
   aspectRatio: document.querySelector("#aspect-ratio"),
@@ -12,11 +11,16 @@ const m = {
   type: document.querySelector("#type"),
   format: document.querySelector("#format"),
   usageRights: document.querySelector("#usage-rights"),
-  safeSearch: document.querySelector("#safe-search"),
+  region: document.querySelector("#region"),
+  date: document.querySelector("#date"),
+  minDate: document.querySelector("#min-date"),
+  maxDate: document.querySelector("#max-date"),
   search: document.querySelector("#find"),
   clear: document.querySelector("#clear"),
   darkTheme: document.querySelector("#dark-theme"),
-  github: document.querySelector("#github")
+  github: document.querySelector("#github"),
+  cSize: document.querySelector("#cSize"),
+  cDate: document.querySelector("#cDate")
 }
 
 let state = {
@@ -31,11 +35,6 @@ m.query.addEventListener("keydown", e => {
     handleSubmit()
     m.search.click()
   }
-})
-
-m.size.addEventListener("change", e => {
-  syncStateFromDOM()
-  syncExactSize()
 })
 
 m.search.addEventListener("click", handleSubmit)
@@ -74,6 +73,14 @@ m.github.addEventListener("keydown", e => {
   }
 })
 
+m.size.addEventListener("change", handleConditionalField)
+m.date.addEventListener("change", handleConditionalField)
+
+function handleConditionalField(e) {
+  syncStateFromDOM()
+  syncConditionalFields()
+}
+
 
 function getDefaultForm() {
   return {
@@ -85,7 +92,11 @@ function getDefaultForm() {
     format: "",
     usageRights: "",
     exactWidth: "",
-    exactHeight: ""
+    exactHeight: "",
+    date: "",
+    minDate: "",
+    maxDate: "", 
+    region: ""
   }
 }
 
@@ -104,6 +115,7 @@ function handleSubmit() {
   let tbs = [];
   params.append("tbm", "isch") // search images 
   params.append("q", form.query) // search query 
+  form.region && params.append("cr", `country${form.region}`)
 
   if (form.size === "qq") {
     if (form.exactWidth || form.exactHeight) {
@@ -118,6 +130,21 @@ function handleSubmit() {
     }
     
   }
+
+  if (form.date === "qq") {
+    let minDate = reformatDate(form.minDate)
+    let maxDate = reformatDate(form.maxDate)
+
+    if (minDate || maxDate) {
+      tbs.push(`cdr:1,cd_min:${minDate},cd_max:${maxDate}`)
+    }
+    alert(`cdr:1,cd_min:${minDate},cd_max:${maxDate}`)
+  } else if (form.date) {
+    tbs.push(`qdr:${form.date}`)
+  }
+
+
+
   form.aspectRatio && tbs.push(`iar:${form.aspectRatio}`)
 
   form.color && tbs.push(`ic:${form.color}`)
@@ -133,6 +160,12 @@ function handleSubmit() {
   window.open(`https://google.com/search?${params.toString()}`,
     '_blank'
   );
+}
+
+function reformatDate(date) {
+  if (!date) return ""
+  const [y, m, d] = date.split("-")
+  return [m, d, y].join("/")
 }
 
 function syncStateFromDOM() {
@@ -154,7 +187,11 @@ function readDOMForm() {
     format: m.format.value,
     usageRights: m.usageRights.value,
     exactWidth: m.exactWidth.value,
-    exactHeight: m.exactHeight.value
+    exactHeight: m.exactHeight.value,
+    date: m.date.value,
+    minDate: m.minDate.value,
+    maxDate: m.maxDate.value,
+    region: m.region.value
   }
 }
 
@@ -215,11 +252,18 @@ function syncProfiles() {
   })
 }
 
-function syncExactSize() {
+function syncConditionalFields() {
+  // exact size 
   if (state.forms[state.index].size === "qq") {
-    m.exactField.style.display = "grid" 
+    m.cSize.style.display = "grid" 
   } else {
-    m.exactField.style.display = "none" 
+    m.cSize.style.display = "none" 
+  }
+
+  if (state.forms[state.index].date === "qq") {
+    m.cDate.style.display = "grid" 
+  } else {
+    m.cDate.style.display = "none" 
   }
 }
 
@@ -227,7 +271,7 @@ function writeDOM() {
   writeDOMForm(state.forms[state.index])
   syncDarkTheme()
   syncProfiles()
-  syncExactSize()
+  syncConditionalFields()
 }
 
 function writeDOMForm(form) {
@@ -240,6 +284,10 @@ function writeDOMForm(form) {
   m.usageRights.value = form.usageRights
   m.exactWidth.value = form.exactWidth
   m.exactHeight.value = form.exactHeight
+  m.date.value = form.date ?? ""
+  m.minDate.value = form.minDate ?? ""
+  m.maxDate.value = form.maxDate ?? "" 
+  m.region.value = form.region ?? ""
 }
 
 
@@ -268,6 +316,7 @@ window.onload = async () => {
     
     // migrate old version 
     state.forms = [storage.form]
+    state.forms[0].usageRights = ""
     state.darkTheme = storage.form.darkTheme ?? false 
     delete storage.form.darkTheme
     chrome.storage.local.remove("form")

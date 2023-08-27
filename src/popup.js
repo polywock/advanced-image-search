@@ -33,7 +33,6 @@ let state = {
 m.query.addEventListener("keydown", e => {
   if (e.key === "Enter") {
     handleSubmit()
-    m.search.click()
   }
 })
 

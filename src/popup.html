@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <style>
 
@@ -15,10 +16,11 @@
       --icon-active-color: #24c;
 
       --profile-selected: #d5d5d5; 
+      --focus-color: #24c;
     }
 
     :root.darkTheme {
-      --border-color: #555;
+      --border-color: #353535;
       --text-color: #eee;
       --bg-color: #222;
       --fg-color: #1a1a1a;
@@ -28,6 +30,7 @@
       --icon-active-color: #8fc;
 
       --profile-selected: #606060; 
+      --focus-color: yellow;
     }
 
     :root.darkTheme input[type="date"] {
@@ -53,8 +56,21 @@
       color: inherit;
     }
 
+    button, select, svg {
+      cursor: pointer;
+    }
+    
+    button, svg {
+      &:hover {
+        opacity: 0.9;
+      }
+      &:active {
+        opacity: 0.8;
+      }
+    }
+
     body {
-      font-family: "Open Sans", sans-serif;
+      font-family: "Segoe UI", "Avenir", system-ui, sans-serif;
       font-size: 15px;
       color: var(--text-color); 
       background-color: var(--bg-color);
@@ -84,11 +100,17 @@
       padding-bottom: 10px;
     }
 
+    select, input, button, svg {
+      &:focus {
+        outline: 1px solid var(--focus-color);
+      }
+    }
   
 
-    select, option, input, button {
+    select, input, button {
       font-size: inherit;
       font-family: inherit;
+      border-radius: 5px;
     }
 
     #exact-width, #exact-height {
@@ -98,7 +120,7 @@
     .footer {
       margin-top: 10px;
       display: grid;
-      grid-template-columns: max-content max-content 1fr max-content;
+      grid-template-columns: max-content max-content 1fr max-content max-content;
       grid-column-gap: 10px;
       justify-items: right;
       align-items: center;
@@ -126,6 +148,10 @@
       font-weight: bolder;
     }
 
+    #profiles-wrap > button {
+      border-radius: 5px;
+    }
+
     #profiles {
       display: inline;
     }
@@ -135,6 +161,7 @@
       margin-right: 5px;
       margin-bottom: 5px;
       position: relative;
+      border-radius: 5px;
     }
 
     #profiles > button.selected {
@@ -147,11 +174,11 @@
       right: -10px;
       background-color: red;
       color: white;
-      /* border-radius: 50%; */
+      border-radius: 20%;
       padding: 0 5px;
       font-size: 10px;
       display: none;
-      z-index: 99999;
+      z-index: 9999999;
     }
 
     #profiles > button:hover .delete {
@@ -162,7 +189,7 @@
 </head>
 <body>
   <div id="profiles-wrap">
-    <label>TABS</label>
+    <label>Tabs</label>
     <div id="profiles"></div>
     <button id="add-profile">+</button>
   </div>
@@ -547,8 +574,9 @@
     </div>
   </div>
   <div class="footer">
-    <button id="find">search</button>
-    <button id="clear">clear</button>
+    <button id="find">Search</button>
+    <button id="clear">Clear</button>
+    <button id="rate">★ Rate</button>
     <svg tabindex="0" id="dark-theme" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"></path></svg>
     <svg tabIndex="0" id="github" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
   </div>

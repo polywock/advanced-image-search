@@ -19,6 +19,7 @@ const m = {
   clear: document.querySelector("#clear"),
   darkTheme: document.querySelector("#dark-theme"),
   github: document.querySelector("#github"),
+  rate: document.querySelector("#rate"),
   cSize: document.querySelector("#cSize"),
   cDate: document.querySelector("#cDate")
 }
@@ -26,7 +27,7 @@ const m = {
 let state = {
   forms: [getDefaultForm()],
   index: 0,
-  darkTheme: false 
+  darkTheme: !!prefersDarkTheme()
 }
 
 
@@ -70,6 +71,10 @@ m.github.addEventListener("keydown", e => {
   if (e.key === "Enter") {
     handleGithub()
   }
+})
+
+m.rate.addEventListener("click", () => {
+  window.open(`https://chrome.google.com/webstore/detail/advanced-image-search/cahpmepdjiejandeladmhfpapeagobnp`, '_blank');
 })
 
 m.size.addEventListener("change", handleConditionalField)
@@ -229,6 +234,7 @@ function syncProfiles() {
   m.profiles.innerHTML = ""
   Array(state.forms.length).fill(0).forEach((v, i) => {
     const b = document.createElement("button")
+    b.style.zIndex = 1000 - i
     b.innerText = i + 1
     if (i === state.index) {
       b.classList.add("selected")
@@ -331,4 +337,8 @@ setInterval(() => {
 
 function clampIndex(v) {
   return Math.max(0, Math.min(v, state.forms.length - 1))
+}
+
+function prefersDarkTheme() {
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 }

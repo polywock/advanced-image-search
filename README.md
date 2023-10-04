@@ -2,7 +2,7 @@
 [Chrome extension](https://chrome.google.com/webstore/detail/advanced-image-search/cahpmepdjiejandeladmhfpapeagobnp) to help perform an advanced Google Image search. 
 
 
-## Warning: Exact size feature no longer wroks as of Sept 16 2020. 
+## Warning: Exact size feature may no longer work.
 
 ## Build 
 1. `npm run build` creates a build/ folder with two build versions. An unpacked/ folder and packed.zip. 
